@@ -979,7 +979,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function App() {
-  var _React$useState = _react2.default.useState(JSON.parse(localStorage.getItem('notes')) || []),
+  var _React$useState = _react2.default.useState(function () {
+    return JSON.parse(localStorage.getItem('notes')) || [];
+  }),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       notes = _React$useState2[0],
       setNotes = _React$useState2[1];
@@ -1164,7 +1166,7 @@ function Editor(_ref) {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 exports.default = Sidebar;
 
@@ -1175,48 +1177,46 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Sidebar(props) {
-    var noteElements = props.notes.map(function (note, index) {
-        return _react2.default.createElement(
-            "div",
-            { key: note.id },
-            _react2.default.createElement(
-                "div",
-                {
-
-                    className: "title " + (note.id === props.currentNote.id ? "selected-note" : ""),
-                    onClick: function onClick() {
-                        return props.setCurrentNoteId(note.id);
-                    }
-                },
-                _react2.default.createElement(
-                    "h4",
-                    { className: "text-snippet" },
-                    "Note ",
-                    index + 1
-                )
-            )
-        );
-    });
-
+  var noteElements = props.notes.map(function (note, index) {
     return _react2.default.createElement(
-        "section",
-        { className: "pane sidebar" },
+      'div',
+      { key: note.id },
+      _react2.default.createElement(
+        'div',
+        {
+          className: 'title ' + (note.id === props.currentNote.id ? 'selected-note' : ''),
+          onClick: function onClick() {
+            return props.setCurrentNoteId(note.id);
+          }
+        },
         _react2.default.createElement(
-            "div",
-            { className: "sidebar--header" },
-            _react2.default.createElement(
-                "h3",
-                null,
-                "Notes"
-            ),
-            _react2.default.createElement(
-                "button",
-                { className: "new-note", onClick: props.newNote },
-                "+"
-            )
-        ),
-        noteElements
+          'h4',
+          { className: 'text-snippet' },
+          note.body.split('\n')[0].slice(1)
+        )
+      )
     );
+  });
+
+  return _react2.default.createElement(
+    'section',
+    { className: 'pane sidebar' },
+    _react2.default.createElement(
+      'div',
+      { className: 'sidebar--header' },
+      _react2.default.createElement(
+        'h3',
+        null,
+        'Notes'
+      ),
+      _react2.default.createElement(
+        'button',
+        { className: 'new-note', onClick: props.newNote },
+        '+'
+      )
+    ),
+    noteElements
+  );
 }
 
 /***/ }),
