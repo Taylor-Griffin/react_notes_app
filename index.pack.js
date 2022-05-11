@@ -1026,7 +1026,16 @@ function App() {
       return note.id === currentNoteId;
     }) || notes[0];
   }
-
+  function deleteNote(e, noteId) {
+    return notes.filter(function (note) {
+      e.stopPropagation();
+      setNotes(function (oldNotes) {
+        return oldNotes.filter(function (note) {
+          return note.id !== noteId;
+        });
+      });
+    });
+  }
   return _react2.default.createElement(
     'main',
     null,
@@ -1037,7 +1046,8 @@ function App() {
         notes: notes,
         currentNote: findCurrentNote(),
         setCurrentNoteId: setCurrentNoteId,
-        newNote: createNewNote
+        newNote: createNewNote,
+        deleteNote: deleteNote
       }),
       currentNoteId && notes.length > 0 && _react2.default.createElement(_Editor2.default, { currentNote: findCurrentNote(), updateNote: updateNote })
     ) : _react2.default.createElement(
@@ -1200,6 +1210,17 @@ function Sidebar(props) {
           'h4',
           { className: 'text-snippet' },
           note.body.split('\n')[0]
+        ),
+        _react2.default.createElement(
+          'button',
+          {
+            className: 'delete-btn',
+            onClick: function onClick(e) {
+              return props.deleteNote(e, note.id);
+            }
+            // Your onClick event handler here
+          },
+          _react2.default.createElement('i', { className: 'gg-trash trash-icon' })
         )
       )
     );
