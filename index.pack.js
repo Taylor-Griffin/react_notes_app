@@ -1008,9 +1008,16 @@ function App() {
 
   function updateNote(text) {
     setNotes(function (oldNotes) {
-      return oldNotes.map(function (oldNote) {
-        return oldNote.id === currentNoteId ? { id: oldNote.id, body: text } : oldNote;
-      });
+      var newArray = [];
+      for (var i = 0; i < oldNotes.length; i++) {
+        var oldNote = oldNotes[i];
+        if (oldNote.id === currentNoteId) {
+          newArray.unshift({ id: oldNote.id, body: text });
+        } else {
+          newArray.push(oldNote);
+        }
+      }
+      return newArray;
     });
   }
 
@@ -1192,7 +1199,7 @@ function Sidebar(props) {
         _react2.default.createElement(
           'h4',
           { className: 'text-snippet' },
-          note.body.split('\n')[0].slice(1)
+          note.body.split('\n')[0]
         )
       )
     );
